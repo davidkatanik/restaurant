@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form">
+            Objednavky
+     
+            <p:dataTable id="foodTable" var="food" value="#{orderBean.foods}" rowKey="#{food.id}">
+                <f:facet name="header">
+                    Jidla
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{food.id}" />
+                </p:column>
+                <p:column headerText="Nazev">
+                    <h:outputText value="#{food.name}" />
+                </p:column>
+                <p:column headerText="Cena">
+                    <h:outputText value="#{food.cost}" />
+                </p:column>
+                <p:column >
+                    <p:commandButton ajax="true" update=":form:orderTable" action="#{orderBean.orderFood(food)}" title="Pridat do objednavky" />
+                </p:column>
+            </p:dataTable>
+            
+            <p:dataTable id="orderTable" var="orderedFood" value="#{orderBean.order.listOfFoods}" rowKey="#{orderedFood.id}">
+                <f:facet name="header">
+                    Objednavka
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{orderedFood.id}" />
+                </p:column>
+                <p:column headerText="Nazev">
+                    <h:outputText value="#{orderedFood.name}" />
+                </p:column>
+                <p:column headerText="Cena">
+                    <h:outputText value="#{orderedFood.cost}" />
+                </p:column>
+            </p:dataTable>
+
+            
+            <p:commandButton ajax="true" update="@form" action="#{orderBean.placeOrder()}" title="Objednat" />
+        </h:form>
+
+    </h:body>
+</html>
+
